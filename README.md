@@ -8,7 +8,7 @@ This repository contains the code used in the TCR repertoire R Studio project fo
   
 - **Fig. 7G**: CDR3 clonal overlap by overlap count matrix
 
-- **Fig. 7I**: average hydrophobicity score of CDR3α and CDR3β
+- **Fig. 7I**: Average hydrophobicity score of CDR3α and CDR3β
   
 - **Fig. 7J**: Diversity of CDR3α and CDR3β
 
