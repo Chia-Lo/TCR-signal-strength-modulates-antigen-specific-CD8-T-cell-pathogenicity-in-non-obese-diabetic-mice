@@ -76,6 +76,21 @@ CD5lo_2_TRBJ_counts <- CD5lo_2_TRBV %>%
   group_by(J) %>%
   summarise(total_count = sum(Count))
 
+# Get the intersect of gene sets
+CD5hi_TRAV_common_genes <- intersect(CD5hi_1_TRAV_counts$V, CD5hi_2_TRAV_counts$V)
+CD5lo_TRAV_common_genes <- intersect(CD5lo_1_TRAV_counts$V, CD5lo_2_TRAV_counts$V)
+TRAV_common_genes <- intersect(CD5hi_TRAV_common_genes, CD5lo_TRAV_common_genes)
+CD5hi_TRAJ_common_genes <- intersect(CD5hi_1_TRAJ_counts$J, CD5hi_2_TRAJ_counts$J)
+CD5lo_TRAJ_common_genes <- intersect(CD5lo_1_TRAJ_counts$J, CD5lo_2_TRAJ_counts$J)
+TRAJ_common_genes <- intersect(CD5hi_TRAJ_common_genes, CD5lo_TRAJ_common_genes)
+
+CD5hi_TRBV_common_genes <- intersect(CD5hi_1_TRBV_counts$V, CD5hi_2_TRBV_counts$V)
+CD5lo_TRBV_common_genes <- intersect(CD5lo_1_TRBV_counts$V, CD5lo_2_TRBV_counts$V)
+TRBV_common_genes <- intersect(CD5hi_TRBV_common_genes, CD5lo_TRBV_common_genes)
+CD5hi_TRBJ_common_genes <- intersect(CD5hi_1_TRBJ_counts$J, CD5hi_2_TRBJ_counts$J)
+CD5lo_TRBJ_common_genes <- intersect(CD5lo_1_TRBJ_counts$J, CD5lo_2_TRBJ_counts$J)
+TRBJ_common_genes <- intersect(CD5hi_TRBJ_common_genes, CD5lo_TRBJ_common_genes)
+
 # Reshape the data into long format and assign correct sample names
 TRAV_all_counts <- bind_rows(
   CD5hi_1_TRAV_counts %>% mutate(Sample = "CD5hi_1_TRAV"),
@@ -102,89 +117,55 @@ TRBJ_all_counts <- bind_rows(
   CD5lo_2_TRBJ_counts %>% mutate(Sample = "CD5lo_2_TRBJ")
 )
 
-# Get the intersect of gene sets
-CD5hi_TRAV_common_genes <- intersect(CD5hi_1_TRAV_counts$V, CD5hi_2_TRAV_counts$V)
-CD5lo_TRAV_common_genes <- intersect(CD5lo_1_TRAV_counts$V, CD5lo_2_TRAV_counts$V)
-TRAV_common_genes <- intersect(CD5hi_TRAV_common_genes, CD5lo_TRAV_common_genes)
-CD5hi_TRAJ_common_genes <- intersect(CD5hi_1_TRAJ_counts$J, CD5hi_2_TRAJ_counts$J)
-CD5lo_TRAJ_common_genes <- intersect(CD5lo_1_TRAJ_counts$J, CD5lo_2_TRAJ_counts$J)
-TRAJ_common_genes <- intersect(CD5hi_TRAJ_common_genes, CD5lo_TRAJ_common_genes)
+# Pivot the data frame to wide format
+TRAV_all_counts <-
+  pivot_wider(
+    data = TRAV_all_counts,
+    names_from = Sample,
+    values_from = total_count
+  )
+TRBV_all_counts <-
+  pivot_wider(
+    data = TRBV_all_counts,
+    names_from = Sample,
+    values_from = total_count
+  )
+TRAJ_all_counts <-
+  pivot_wider(
+    data = TRAJ_all_counts,
+    names_from = Sample,
+    values_from = total_count
+  )
+TRBJ_all_counts <-
+  pivot_wider(
+    data = TRBJ_all_counts,
+    names_from = Sample,
+    values_from = total_count
+  )
 
-CD5hi_TRBV_common_genes <- intersect(CD5hi_1_TRBV_counts$V, CD5hi_2_TRBV_counts$V)
-CD5lo_TRBV_common_genes <- intersect(CD5lo_1_TRBV_counts$V, CD5lo_2_TRBV_counts$V)
-TRBV_common_genes <- intersect(CD5hi_TRBV_common_genes, CD5lo_TRBV_common_genes)
-CD5hi_TRBJ_common_genes <- intersect(CD5hi_1_TRBJ_counts$J, CD5hi_2_TRBJ_counts$J)
-CD5lo_TRBJ_common_genes <- intersect(CD5lo_1_TRBJ_counts$J, CD5lo_2_TRBJ_counts$J)
-TRBJ_common_genes <- intersect(CD5hi_TRBJ_common_genes, CD5lo_TRBJ_common_genes)
-
-# Filter data for CD5hi and CD5lo groups
-TRAV_CD5hi_data <- TRAV_all_counts %>%
-  filter(Sample %in% c("CD5hi_1_TRAV", "CD5hi_2_TRAV")) %>%
-  group_by(V) 
-TRAV_CD5lo_data <- TRAV_all_counts %>%
-  filter(Sample %in% c("CD5lo_1_TRAV", "CD5lo_2_TRAV")) %>%
-  group_by(V)
-TRAJ_CD5hi_data <- TRAJ_all_counts %>%
-  filter(Sample %in% c("CD5hi_1_TRAJ", "CD5hi_2_TRAJ")) %>%
-  group_by(J) 
-TRAJ_CD5lo_data <- TRAJ_all_counts %>%
-  filter(Sample %in% c("CD5lo_1_TRAJ", "CD5lo_2_TRAJ")) %>%
-  group_by(J)
-
-TRBV_CD5hi_data <- TRBV_all_counts %>%
-  filter(Sample %in% c("CD5hi_1_TRBV", "CD5hi_2_TRBV")) %>%
-  group_by(V) 
-TRBV_CD5lo_data <- TRBV_all_counts %>%
-  filter(Sample %in% c("CD5lo_1_TRBV", "CD5lo_2_TRBV")) %>%
-  group_by(V)
-TRBJ_CD5hi_data <- TRBJ_all_counts %>%
-  filter(Sample %in% c("CD5hi_1_TRBJ", "CD5hi_2_TRBJ")) %>%
-  group_by(J) 
-TRBJ_CD5lo_data <- TRBJ_all_counts %>%
-  filter(Sample %in% c("CD5lo_1_TRBJ", "CD5lo_2_TRBJ")) %>%
-  group_by(J)
-
-# Filter TRAV_CD5hi_data and TRAV_CD5lo_data to keep only common genes
-TRAV_CD5hi_data_filtered <- TRAV_CD5hi_data %>%
+# Filter TRAV_all_counts to keep only common genes
+TRAV_data_filtered <- TRAV_all_counts %>%
   filter(V %in% TRAV_common_genes)
-TRAV_CD5lo_data_filtered <- TRAV_CD5lo_data %>%
-  filter(V %in% TRAV_common_genes)
-TRAV_CD5hi <- as.data.frame(TRAV_CD5hi_data_filtered)
-TRAV_CD5lo <- as.data.frame(TRAV_CD5lo_data_filtered)
-write_xlsx(TRAV_CD5hi, "TRAV_CD5hi.xlsx", format_headers = TRUE)
-write_xlsx(TRAV_CD5lo, "TRAV_CD5lo.xlsx", format_headers = TRUE)
-# Plot in Prism
+write_xlsx(TRAV_data_filtered, "TRAV_all.xlsx", format_headers = TRUE)
+# Plot Fig.7B in Prism
 
-TRAJ_CD5hi_data_filtered <- TRAJ_CD5hi_data %>%
+# Filter TRAJ_all_counts to keep only common genes
+TRAJ_data_filtered <- TRAJ_all_counts %>%
   filter(J %in% TRAJ_common_genes)
-TRAJ_CD5lo_data_filtered <- TRAJ_CD5lo_data %>%
-  filter(J %in% TRAJ_common_genes)
-TRAJ_CD5hi <- as.data.frame(TRAJ_CD5hi_data_filtered)
-TRAJ_CD5lo <- as.data.frame(TRAJ_CD5lo_data_filtered)
-write_xlsx(TRAJ_CD5hi, "TRAJ_CD5hi.xlsx", format_headers = TRUE)
-write_xlsx(TRAJ_CD5lo, "TRAJ_CD5lo.xlsx", format_headers = TRUE)
-# Plot in Prism
+write_xlsx(TRAJ_data_filtered, "TRAJ_all.xlsx", format_headers = TRUE)
+# Plot Fig.7C in Prism
 
-# Filter TRBJ_CD5hi_data and TRBJ_CD5lo_data to keep only common genes
-TRBV_CD5hi_data_filtered <- TRBV_CD5hi_data %>%
+# Filter TRBV_all_counts to keep only common genes
+TRBV_data_filtered <- TRBV_all_counts %>%
   filter(V %in% TRBV_common_genes)
-TRBV_CD5lo_data_filtered <- TRBV_CD5lo_data %>%
-  filter(V %in% TRBV_common_genes)
-TRBV_CD5hi <- as.data.frame(TRBV_CD5hi_data_filtered)
-TRBV_CD5lo <- as.data.frame(TRBV_CD5lo_data_filtered)
-write_xlsx(TRBV_CD5hi, "TRBV_CD5hi.xlsx", format_headers = TRUE)
-write_xlsx(TRBV_CD5lo, "TRBV_CD5lo.xlsx", format_headers = TRUE)
-# Plot in Prism
+write_xlsx(TRBV_data_filtered, "TRBV_all.xlsx", format_headers = TRUE)
+# Plot Fig.7D in Prism
 
-TRBJ_CD5hi_data_filtered <- TRBJ_CD5hi_data %>%
+# Filter TRBJ_all_counts to keep only common genes
+TRBJ_data_filtered <- TRBJ_all_counts %>%
   filter(J %in% TRBJ_common_genes)
-TRBJ_CD5lo_data_filtered <- TRBJ_CD5lo_data %>%
-  filter(J %in% TRBJ_common_genes)
-TRBJ_CD5hi <- as.data.frame(TRBJ_CD5hi_data_filtered)
-TRBJ_CD5lo <- as.data.frame(TRBJ_CD5lo_data_filtered)
-write_xlsx(TRBJ_CD5hi, "TRBJ_CD5hi.xlsx", format_headers = TRUE)
-write_xlsx(TRBJ_CD5lo, "TRBJ_CD5lo.xlsx", format_headers = TRUE)
-# Plot in Prism
+write_xlsx(TRBJ_data_filtered, "TRBJ_all.xlsx", format_headers = TRUE)
+# Plot Fig.7E in Prism
 
 ### Fig.7F ### 
 # library("rTCRBCRr")
