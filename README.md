@@ -21,7 +21,8 @@ To reproduce the figures, follow these steps:
 1. Clone this repository to your local machine.
 2. Navigate to the appropriate directory.
 3. Open the TCR repertoire R Studio project file.
-4. Run the R scripts associated with each figure to generate the plots.
+4. Open the TCR signal strength modulates antigen-specific CD8+ T cell pathogenicity in non-obese diabetic mice.R file.
+5. Run the R scripts associated with each figure to generate the plots.
 
 
 
