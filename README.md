@@ -12,7 +12,7 @@ This repository contains the code used in the TCR repertoire R Studio project fo
   
 - **Fig. 7J**: Diversity of CDR3α and CDR3β
 
-- **Fig. S7**: Pairing VJ gene segment usage in CD5hiCD8+ or CD5loCD8+ cells
+- **Fig. S7**: Pairing VJ gene segment usage in CD5hiCD8+ and CD5loCD8+ cells
 
 ## Usage
 
@@ -20,12 +20,10 @@ To reproduce the figures, follow these steps:
 
 1. Clone this repository to your local machine.
 2. Navigate to the appropriate directory.
-3. Open the R Studio project file.
+3. Open the TCR repertoire R Studio project file.
 4. Run the R scripts associated with each figure to generate the plots.
 
-## License
 
-This project is licensed under the [MIT License](LICENSE).
 
 ## Citation
 
