@@ -519,7 +519,7 @@ CD5lo_2_TRB_repertoire_metrics <- CD5lo_2_TRB %>%
 # TRD        NA         NA       NA        NA           NA
 # TRG        NA         NA       NA        NA           NA
 
-### Fig.S7 ###
+### Supplemental material ###
 # Extract V, D, and J columns
 # Count occurrences of each combination
 VJdata_CD5hi_1_TRAV <- CD5hi_1_TRAV %>%
