@@ -12,7 +12,7 @@ This repository contains the code used in the TCR repertoire R Studio project fo
   
 - **Fig. 7J**: Diversity of CDR3α and CDR3β
 
-- **Supplemental material**: Pairing VJ gene segments usage in CD5hiCD8+ and CD5loCD8+ cells
+- **Supplemental Figure 6**: Pairing VJ gene segments usage in CD5hiCD8+ and CD5loCD8+ cells
 
 ## Usage
 
