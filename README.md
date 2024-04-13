@@ -1,4 +1,4 @@
-# Thymic Self-Recognition-Mediated TCR Signal Strength Modulates Antigen-specific CD8+ T Cell Pathogenicity in Non-obese Diabetic Mice
+# Thymic Self-recognition-mediated TCR Signal Strength Modulates Antigen-specific CD8+ T Cell Pathogenicity in Non-obese Diabetic Mice
 
 This repository contains the code used in the TCR repertoire R Studio project for drawing the following figures:
 
